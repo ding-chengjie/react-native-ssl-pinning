@@ -1,8 +1,12 @@
 {
-  "name": "react-native-ssl-pinning",
+  "name": "@react-native-oh-tpl/react-native-ssl-pinning",
   "version": "1.5.7",
-  "description": "React-Native Ssl pinning using OkHttp 3 in Android, and AFNetworking on iOS.",
-  "main": "index.js",
+  "description": "React Native module for harmony",
+  "main": "./index.js",
+  "files": [
+    "harmony",
+    "package.json"
+  ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -12,7 +16,8 @@
   "types": "./index.d.ts",
   "author": "Max Toyberman",
   "dependencies": {
-    "q": "^1.4.1"
+    "q": "^1.4.1",
+    "react-native-ssl-pinning": "^1.5.7"
   },
   "license": "MIT",
   "homepage": "https://github.com/MaxToyberman/react-native-ssl-pinning#README",
@@ -22,5 +27,16 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/MaxToyberman/react-native-ssl-pinning.git"
+  },
+  "overrides": {
+    "@react-native/codegen": "0.74.0"
+  },
+  "harmony": {
+    "alias": "react-native-ssl-pinning",
+    "codegenConfig": {
+      "specPaths": [
+        "./NativeSslPinningModule.ts"
+      ]
+    }
   }
 }

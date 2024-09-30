@@ -1,0 +1,11 @@
+{
+  "module": {
+    "name": "ssl_pinning",
+    "type": "har",
+    "deviceTypes": [
+      "default",
+      "tablet",
+      "2in1"
+    ]
+  }
+}
