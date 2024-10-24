@@ -23,36 +23,53 @@
  */
 
 import dataStorage from '@ohos.data.storage'
-import featureAbility from '@ohos.ability.featureAbility'
-import { CookiePolicy } from './httpcookieutils';
-import { Logger } from '../Logger';
+import Logger from './Logger';
+
 
 function CookieStore(cacheDir) {
-  var cookieJSON, path = null;
   this.path = cacheDir;
-  console.info('httpclient- CookieStore path: ' + this.path);
+  Logger.info('httpclient- CookieStore path: ' + this.path);
 }
 
 CookieStore.prototype.setCacheDir = function setCacheDir(filePath) {
   this.path = filePath;
 }
 CookieStore.prototype.readCookie = function readCookie(hostname) {
-  console.info('httpclient- CookieStore readCookie: ' + hostname);
-  let storage = dataStorage.getStorageSync(this.path + '/cookiestore');
+  Logger.info('httpclient- CookieStore readCookie: ' + hostname);
+  let storage = dataStorage.getStorageSync(this.path + '/cookieStore');
   let cookieJSON = storage.getSync(hostname, '')
   storage.flushSync();
+  Logger.info('httpclient- CookieStore readCookie: ' + cookieJSON);
   return cookieJSON;
 }
-CookieStore.prototype.writeCookie = function writeCookie(hostname, cookieJSON) {
-  console.info('httpclient- CookieStore writeCookie: ' + hostname + ',cookieJSON:' + cookieJSON + ',path:' + this.path);
-  let storage = dataStorage.getStorageSync(this.path + '/cookiestore');
+CookieStore.prototype.writeCookie = async function writeCookie(hostname, cookieJSON) {
+  Logger.info('httpclient- CookieStore writeCookie: ' + hostname + ',cookieJSON:' + cookieJSON + ',path:' + this.path);
+  let storage = dataStorage.getStorageSync(this.path + '/cookieStore');
+  //保存所有的domain
+  let allDomainKey: string = "allDomainKey"
+  if (storage.hasSync(allDomainKey)) {
+    let allDomain : string = JSON.stringify(await storage.get(allDomainKey,""));
+    if (allDomain.search(hostname) == -1) {
+      allDomain += allDomain.concat(";").concat(hostname)
+      storage.putSync(allDomainKey, allDomain)
+    }
+  } else {
+    storage.putSync(allDomainKey, hostname)
+  }
+  storage.putSync(hostname, cookieJSON)
+  storage.flushSync();
+}
+
+CookieStore.prototype.getCookieDomain = function getCookieDomain(hostname, cookieJSON) {
+  Logger.info('httpclient- CookieStore writeCookie: ' + hostname + ',cookieJSON:' + cookieJSON + ',path:' + this.path);
+  let storage = dataStorage.getStorageSync(this.path + '/cookieStore');
   storage.putSync(hostname, cookieJSON)
   storage.flushSync();
 }
 
 CookieStore.prototype.deleteCookie = function deleteCookie(hostname) {
-  console.info('httpclient- CookieStore deleteCookie: ' + hostname + ',path:' + this.path);
-  let storage = dataStorage.getStorageSync(this.path + '/cookiestore');
+  Logger.info('httpclient- CookieStore deleteCookie: ' + hostname + ',path:' + this.path);
+  let storage = dataStorage.getStorageSync(this.path + '/cookieStore');
   storage.has(hostname, function (err, isExist) {
     if (isExist) {
       storage.delete(hostname, function (err) {
