@@ -23,16 +23,20 @@
     "react-native-ssl-pinning": "^1.5.7"
   },
   "license": "MIT",
-  "homepage": "https://github.com/MaxToyberman/react-native-ssl-pinning#README",
+  "homepage": "https://github.com/react-native-oh-library/react-native-ssl-pinning#README",
   "peerDependencies": {
     "react-native": "*"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/MaxToyberman/react-native-ssl-pinning.git"
+    "url": "git+https://github.com/react-native-oh-library/react-native-ssl-pinning.git"
   },
   "overrides": {
     "@react-native/codegen": "0.74.0"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
+     "access": "public"
   },
   "harmony": {
     "alias": "react-native-ssl-pinning",
