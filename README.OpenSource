@@ -1,0 +1,11 @@
+[
+    {
+        "Name": "react-native-ssl-pinning",
+        "License": "MIT License",
+        "License File": "LICENSE",
+        "Version Number": "1.5.7",
+        "Owner" : "xiafeng@huawei.com",
+        "Upstream URL": "https://github.com/MaxToyberman/react-native-ssl-pinning",
+        "Description": "React Native ssl pinning and cookies handling based on okhttp3 on (Android). and AFNetworking on (iOS)"
+    }
+]
